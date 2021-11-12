@@ -160,6 +160,24 @@ pub fn initialize_animation_controllers(
   impl Plugin for AnimationPlugin {
     fn build(&self, app: &mut AppBuilder) {
       app
-        .add_startup_system(initialize_animation_controllers.system().label("Initialize Components"));
+        .add_startup_system(initialize_animation_controllers.system().label("Initialize Components"))
+        .add_system(animate_sprite_system.system());
     }
   }
+
+pub fn animate_sprite_system(
+    time: Res<Time>,
+    library: Res<AnimationLibrary>,
+    mut query: Query<(&mut Timer, &mut TextureAtlasSprite, &mut AnimationController)>,
+) {
+
+    for (mut timer, mut sprite, mut anim_controller) in query.iter_mut() {
+        if anim_controller.current_animation == None {
+            anim_controller.get_initial_animation(&library);
+        }
+        timer.tick(time.delta());
+        if timer.finished() {
+            sprite.index = anim_controller.get_next_frame() as u32;
+        }
+    }
+}
