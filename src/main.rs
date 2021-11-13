@@ -1,4 +1,5 @@
 pub mod animation;
+pub mod physics;
 
 mod prelude {
     pub use bevy::{
@@ -11,6 +12,7 @@ mod prelude {
         cmp::PartialEq,
     };
     pub use crate::animation::*;
+    pub use crate::physics::*;
 }
 use crate::prelude::*;
 
