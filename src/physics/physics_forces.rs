@@ -28,10 +28,3 @@ impl PhysForce {
     self.force.lerp(Vec2::ZERO, t);
   }
 }
-
-pub fn decay_force(
-  time: Res<Time>,
-  mut query: Query<&mut Transform, Changed<PhysBody>>,
-) {
-
-}

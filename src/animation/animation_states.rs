@@ -50,7 +50,6 @@ impl Animation {
     } else {
       new_true_index = self.first_frame + new_relative_index;
     }
-    println!("Relative: {0}, True: {1}", new_relative_index, new_true_index);
     return (new_relative_index, new_true_index);
   }
 }
@@ -154,16 +153,6 @@ pub fn initialize_animation_controllers(
   coms.insert_resource(library);
   println!("Initialized Animation Controllers");
 }
-
- pub struct AnimationPlugin;
-
-  impl Plugin for AnimationPlugin {
-    fn build(&self, app: &mut AppBuilder) {
-      app
-        .add_startup_system(initialize_animation_controllers.system().label("Initialize Components"))
-        .add_system(animate_sprite_system.system());
-    }
-  }
 
 pub fn animate_sprite_system(
     time: Res<Time>,
